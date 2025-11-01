@@ -1,0 +1,20 @@
+{
+  "name": "movement-component-system-test",
+  "version": "1.0.0",
+  "description": "Code test: Build a Vue component system with live compilation",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@webcontainer/api": "^1.1.9",
+    "codemirror": "^5.65.2",
+    "vue": "^3.4.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.0",
+    "vite": "^5.0.0"
+  }
+}
