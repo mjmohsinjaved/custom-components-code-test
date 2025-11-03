@@ -60,4 +60,75 @@ A sample Vue component is provided in the CodeMirror editor to help you get star
 
 ## Your Notes
 
-_Add your architectural decisions, approach, and any relevant notes here._
+### Implementation Summary
+
+✅ All 4 TODOs successfully completed with modular, production-ready architecture.
+
+### Key Architectural Decision: Modular Refactoring
+
+**Challenge**: Original App.vue was 636 lines with mixed concerns (UI, compilation, mounting, state management).
+
+**Solution**: Refactored into modular architecture using Vue 3 Composition API:
+
+```
+src/
+├── App.vue (65 lines) - Main orchestration
+├── components/        - UI components
+│   ├── CodeEditor.vue
+│   ├── PropsPanel.vue
+│   └── ComponentPreview.vue
+├── composables/       - Reusable business logic
+│   ├── useWebContainer.js
+│   ├── useComponentCompiler.js
+│   ├── useComponentMount.js
+│   └── usePropsSchema.js
+└── utils/             - Shared constants
+    ├── buildScript.js
+    └── sampleComponent.js
+```
+
+**Result**: 90% reduction in main component complexity, better maintainability and testability.
+
+### Implementation Approach
+
+**TODO 1 - WebContainer & Compilation**:
+- Singleton pattern for WebContainer to prevent multiple boot processes
+- Separated filesystem setup, dependency installation, and compilation logic
+- Files: `useWebContainer.js`, `useComponentCompiler.js`
+
+**TODO 2 - Props Extraction & JSON Schema**:
+- Parse Vue SFC using `@vue/compiler-sfc` inside WebContainer
+- Safe evaluation using Node.js VM module
+- Converts Vue types to JSON Schema (String→string, Number→number)
+- Extracts MVT metadata (description, min/max)
+- Files: `buildScript.js`, `usePropsSchema.js`
+
+**TODO 4 - Component Mounting**:
+- Three-step process: extract definition, create render function, mount to DOM
+- Reactive updates via watchers when props change
+- Proper cleanup on unmount
+- Files: `useComponentMount.js`, `ComponentPreview.vue`
+
+**TODO 5 - $mvt.store**:
+- localStorage wrapper with JSON serialization
+- Async interface for future scalability
+- Error handling with try-catch
+- File: `runtime.js`
+
+### Technical Benefits
+
+- **Maintainability**: Small, focused files (avg 80 lines) vs one 636-line file
+- **Testability**: Each composable can be unit tested independently
+- **Reusability**: Composables can be used in other components
+- **Performance**: WebContainer singleton, efficient reactive updates
+- **Error Handling**: Dedicated error states and user-friendly messages
+
+### Testing Verification
+
+✅ Component compilation works
+✅ Props schema extraction displays correctly
+✅ Dynamic input fields generated based on prop types
+✅ Live preview updates when props change
+✅ localStorage persistence ($mvt.store) functional
+
+For detailed architecture documentation, see `REFACTORING_GUIDE.md`.
