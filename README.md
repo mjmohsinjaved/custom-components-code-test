@@ -131,4 +131,3 @@ src/
 ✅ Live preview updates when props change
 ✅ localStorage persistence ($mvt.store) functional
 
-For detailed architecture documentation, see `REFACTORING_GUIDE.md`.
